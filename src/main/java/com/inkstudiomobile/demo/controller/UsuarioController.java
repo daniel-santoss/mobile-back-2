@@ -26,7 +26,7 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public Usuario login(@RequestParam String email, @RequestParam String senha) {
-        return usuarioService.findByEmailSenha(email, senha).get();
+        return usuarioService.findByEmailAndSenha(email, senha).get();
     }
     
     @GetMapping("/{id}")

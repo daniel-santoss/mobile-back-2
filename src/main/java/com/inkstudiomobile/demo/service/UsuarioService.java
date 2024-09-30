@@ -21,8 +21,8 @@ public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
 
-    public Optional<Usuario> findByEmailSenha(String email, String senha) {
-        return usuarioRepository.findByEmailSenha(email, senha);
+    public Optional<Usuario> findByEmailAndSenha(String email, String senha) {
+        return usuarioRepository.findByEmailAndSenha(email, senha);
     }
 
     public Optional<Usuario> findById(Long id) {
@@ -36,7 +36,7 @@ public class UsuarioService {
         }
 
         // Tenta fazer login com e-mail e senha
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmailSenha(email, senha);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmailAndSenha(email, senha);
         if (usuarioOpt.isEmpty()) {
             throw new IllegalArgumentException("Senha inválida.");
         }
