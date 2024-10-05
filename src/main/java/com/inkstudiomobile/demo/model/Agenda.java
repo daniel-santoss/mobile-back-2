@@ -1,6 +1,9 @@
 package com.inkstudiomobile.demo.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,9 +25,27 @@ public class Agenda {
 	@Column(name = "id")
 	
 	private Long id;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data;
+	private LocalTime horas;
 	private String servico;
 	private String profissional;
+	private String statusAgenda;
+	
+	
+	public String getStatusAgenda() {
+		return statusAgenda;
+	}
+	public void setStatusAgenda(String statusAgenda) {
+		this.statusAgenda = statusAgenda;
+	}
+	
+	public LocalTime getHoras() {
+		return horas;
+	}
+	public void setHoras(LocalTime horas) {
+		this.horas = horas;
+	}
 	
 	public Long getId() {
 		return id;

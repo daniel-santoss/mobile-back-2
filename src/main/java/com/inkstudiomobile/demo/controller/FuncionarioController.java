@@ -17,9 +17,9 @@ public class FuncionarioController {
 	
 	
 	@Autowired
-	FuncionarioRepository funcionarRepository;
+	FuncionarioRepository fr;
 	@Autowired
-	FuncionarioService funcionarioService;
+	FuncionarioService fs;
 
 	@Autowired
 	OrcamentoRepository or;
@@ -35,7 +35,7 @@ public class FuncionarioController {
 
 		@PostMapping("/login")
 		public String efetuarLogin(Model model, Funcionario funcionario, HttpSession session) {
-			Funcionario funcSession = this.funcionarRepository.login(funcionario.getEmail(), funcionario.getSenha());
+			Funcionario funcSession = this.fr.login(funcionario.getEmail(), funcionario.getSenha());
 
 			if (funcSession != null) {
 				// Verifica o status do usuário
@@ -47,7 +47,7 @@ public class FuncionarioController {
 				// Se o status for ativo, inicia a sessão do usuário
 				session.setAttribute("funcSession", funcSession);
 				model.addAttribute("usuario", funcSession);
-				return "pag-principal-func";
+				return "";
 			}
 			model.addAttribute("erro", "usuario ou senha inválidos");
 			return "";

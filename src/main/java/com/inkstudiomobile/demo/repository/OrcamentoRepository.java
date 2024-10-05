@@ -13,6 +13,6 @@ public interface OrcamentoRepository extends JpaRepository<Orcamento, Long>{
 	    Iterable<Orcamento> findByIdFuncionario(Long id_funcionario);
 		
 		@Query(value = "select * from orcamento where id_usuario = :id_usuario", nativeQuery = true)
-	    Iterable<Orcamento> findByIdUsuariorio(Long id_usuario);
+	    Iterable<Orcamento> findByIdUsuario(Long id_usuario);
 
 }

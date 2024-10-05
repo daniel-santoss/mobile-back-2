@@ -14,15 +14,41 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="orcamento")
+
 public class Orcamento {
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private long id;
 	private String horas;
+	private String hora;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data;
+	private String statusOrcamento;
+	
+	@ManyToOne
+	@JoinColumn(name = "Id_funcionario")
+	private Funcionario funcionario;
+	@ManyToOne
+	@JoinColumn(name = "Id_usuario")
+	private Usuario usuario;
+	
+	
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+	public String getStatusOrcamento() {
+		return statusOrcamento;
+	}
+	public void setStatusOrcamento(String statusOrcamento) {
+		this.statusOrcamento = statusOrcamento;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -53,11 +79,5 @@ public class Orcamento {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	@ManyToOne
-	@JoinColumn(name = "Id_funcionario")
-	private Funcionario funcionario;
-	@ManyToOne
-	@JoinColumn(name = "Id_usuario")
-	private Usuario usuario;
 
 }
