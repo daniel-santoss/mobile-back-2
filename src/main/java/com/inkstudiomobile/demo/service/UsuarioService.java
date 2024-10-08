@@ -19,24 +19,22 @@ public class UsuarioService {
 		this.ur = ur;
 	}
 
-    private UsuarioRepository usuarioRepository;
-
     public Optional<Usuario> findByEmailAndSenha(String email, String senha) {
-        return usuarioRepository.findByEmailAndSenha(email, senha);
+        return ur.findByEmailAndSenha(email, senha);
     }
 
     public Optional<Usuario> findById(Long id) {
-        return usuarioRepository.findById(id);
+        return ur.findById(id);
     }
     
     public Usuario login(String email, String senha) {
         // Verifica se o e-mail existe no banco de dados
-        if (!usuarioRepository.existsByEmail(email)) {
+        if (!ur.existsByEmail(email)) {
             throw new NoSuchElementException("E-mail não cadastrado.");
         }
 
         // Tenta fazer login com e-mail e senha
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmailAndSenha(email, senha);
+        Optional<Usuario> usuarioOpt = ur.findByEmailAndSenha(email, senha);
         if (usuarioOpt.isEmpty()) {
             throw new IllegalArgumentException("Senha inválida.");
         }

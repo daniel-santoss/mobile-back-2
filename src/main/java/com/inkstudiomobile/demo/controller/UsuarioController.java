@@ -26,51 +26,49 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin
 @RequestMapping("/usuarios")
 public class UsuarioController {
-	
+
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
-    @Autowired
-    UsuarioService usuarioService;
-    
-    @Autowired
-    OrcamentoRepository or;
-    
-    @GetMapping("/{id}")
-    public Usuario getUsuario(@PathVariable Long id) {
-        return usuarioService.findById(id).get();
-    }
-    
-    @GetMapping("/login")
+
+	@Autowired
+	UsuarioService usuarioService;
+
+	@Autowired
+	OrcamentoRepository or;
+
+	@GetMapping("/{id}")
+	public Usuario getUsuario(@PathVariable Long id) {
+		return usuarioService.findById(id).get();
+	}
+
+	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
 
-    @PostMapping("/login")
+	@PostMapping("/login")
 	public String efetuarLogin(Model model, Usuario usuario, HttpSession session) {
 		Usuario userSession = this.usuarioRepository.login(usuario.getEmail(), usuario.getSenha());
-  
-    
-    if (userSession != null) {
-		// Verifica o status do usuário
-		if ("INATIVO".equals(userSession.getStatusUsuario())) {
-			model.addAttribute("erro", "Essa conta foi deletada!");
-			return "";
+
+		if (userSession != null) {
+			// Verifica o status do usuário
+			if ("INATIVO".equals(userSession.getStatusUsuario())) {
+				model.addAttribute("erro", "Essa conta foi deletada!");
+				return "";
+			}
+
+			// Se o status for ativo, inicia a sessão do usuário
+			session.setAttribute("userSession", userSession);
+			model.addAttribute("usuario", userSession);
+			return "activity_agenda";
 		}
-		
-		// Se o status for ativo, inicia a sessão do usuário
-		session.setAttribute("userSession", userSession);
-		model.addAttribute("usuario", userSession);
-			return "";
-				}
 
 		model.addAttribute("erro", "usuario ou senha inválidos!");
-			return "";
-			
+		return "login";
+
 	}
-    
-    
-    @GetMapping("/minha-agenda")
+
+	@GetMapping("/minha-agenda")
 	public ModelAndView listarAgenda(HttpSession session) {
 		Usuario usuarioLogado = (Usuario) session.getAttribute("userSession");
 
@@ -92,10 +90,5 @@ public class UsuarioController {
 
 		return mv;
 	}
-		
-}
-   
-    
-    
 
-    
+}
