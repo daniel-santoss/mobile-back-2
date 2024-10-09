@@ -47,24 +47,24 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public String efetuarLogin(Model model, Usuario usuario, HttpSession session) {
+	public Usuario efetuarLogin(Model model, Usuario usuario, HttpSession session) {
 		Usuario userSession = this.usuarioRepository.login(usuario.getEmail(), usuario.getSenha());
 
 		if (userSession != null) {
 			// Verifica o status do usuário
 			if ("INATIVO".equals(userSession.getStatusUsuario())) {
 				model.addAttribute("erro", "Essa conta foi deletada!");
-				return "";
+				return null;
 			}
 
 			// Se o status for ativo, inicia a sessão do usuário
 			session.setAttribute("userSession", userSession);
 			model.addAttribute("usuario", userSession);
-			return "activity_agenda";
+			return userSession;
 		}
 
 		model.addAttribute("erro", "usuario ou senha inválidos!");
-		return "login";
+		return null;
 
 	}
 

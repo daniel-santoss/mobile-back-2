@@ -29,7 +29,15 @@ public class Agenda {
 	private LocalDate data;
 	private LocalTime horas;
 	private String servico;
-	private String profissional;
+	@ManyToOne
+	@JoinColumn(name = "Id_funcionario")
+	private Funcionario funcionario;
+	@ManyToOne
+	@JoinColumn(name = "Id_usuario")
+	private Usuario usuario;
+	@ManyToOne
+	@JoinColumn(name = "Id_Orcamento")
+	private Orcamento orcamento;
 	private String statusAgenda;
 	
 	
@@ -65,11 +73,11 @@ public class Agenda {
 	public void setServico(String servico) {
 		this.servico = servico;
 	}
-	public String getProfissional() {
-		return profissional;
+	public Funcionario getProfissional() {
+		return funcionario;
 	}
-	public void setProfissional(String profissional) {
-		this.profissional = profissional;
+	public void setProfissional(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -83,11 +91,6 @@ public class Agenda {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	@ManyToOne
-	@JoinColumn(name = "Id_funcionario")
-	private Funcionario funcionario;
-	@ManyToOne
-	@JoinColumn(name = "Id_usuario")
-	private Usuario usuario;
+	
 
 }
